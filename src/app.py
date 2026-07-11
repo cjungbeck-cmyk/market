@@ -1,20 +1,21 @@
 import os
 import requests
-import sys
 
-webhook = os.environ.get("DISCORD_WEBHOOK")
+from market import get_market_report
 
-print("Webhook exists:", webhook is not None)
-print("Webhook starts with:", webhook[:25] if webhook else "None")
+WEBHOOK = os.environ["DISCORD_WEBHOOK"]
+
+message = f"""📈 **Market Close**
+
+{get_market_report()}
+"""
 
 response = requests.post(
-    webhook,
-    json={"content": "✅ Test från GitHub Actions"}
+    WEBHOOK,
+    json={"content": message}
 )
 
-print("Status:", response.status_code)
-print("Body:", response.text)
+print("Discord status:", response.status_code)
+print("Discord response:", response.text)
 
 response.raise_for_status()
-
-sys.exit(0)
