@@ -14,25 +14,31 @@ def get_market_report():
 
     for name, ticker in markets.items():
 
-        data = yf.download(
-            ticker,
-            period="2d",
-            progress=False,
-            auto_adjust=False
-        )
+        try:
 
-        if len(data) < 2:
-            continue
+            data = yf.download(
+                ticker,
+                period="2d",
+                progress=False,
+                auto_adjust=False
+            )
 
-        close = float(data["Close"].iloc[-1])
-        previous = float(data["Close"].iloc[-2])
+            if len(data) < 2:
+                report.append(f"⚪ {name} Ingen data")
+                continue
 
-        change = ((close-previous)/previous)*100
+            close = float(data["Close"].iloc[-1])
+            previous = float(data["Close"].iloc[-2])
 
-        emoji = "🟢" if change >= 0 else "🔴"
+            change = ((close - previous) / previous) * 100
 
-        report.append(
-            f"{emoji} **{name}** {change:.2f}%"
-        )
+            emoji = "🟢" if change >= 0 else "🔴"
+
+            report.append(
+                f"{emoji} **{name}** {change:+.2f}%"
+            )
+
+        except Exception:
+            report.append(f"⚠️ {name} Fel")
 
     return "\n".join(report)
