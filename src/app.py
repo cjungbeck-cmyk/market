@@ -5,14 +5,20 @@ from market import get_market_report
 
 WEBHOOK = os.environ["DISCORD_WEBHOOK"]
 
-message = f"""📈 **Market Close**
-
-{get_market_report()}
-"""
+embed = {
+    "title": "📈 Market Close",
+    "description": get_market_report(),
+    "color": 3447003,
+    "footer": {
+        "text": "MarketBot • Powered by GitHub Actions"
+    }
+}
 
 response = requests.post(
     WEBHOOK,
-    json={"content": message}
+    json={
+        "embeds": [embed]
+    }
 )
 
 print("Discord status:", response.status_code)
