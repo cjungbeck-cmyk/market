@@ -4,9 +4,9 @@ markets = {
     "S&P 500": "^GSPC",
     "Nasdaq": "^IXIC",
     "Dow Jones": "^DJI",
-    "OMXS30": "^OMXS30",
     "DAX": "^GDAXI",
 }
+
 
 def get_market_report():
 
@@ -16,19 +16,15 @@ def get_market_report():
 
         try:
 
-            data = yf.download(
-                ticker,
-                period="2d",
-                progress=False,
-                auto_adjust=False
-            )
+            ticker_obj = yf.Ticker(ticker)
+            hist = ticker_obj.history(period="5d")
 
-            if len(data) < 2:
+            if hist.empty or len(hist) < 2:
                 report.append(f"⚪ {name} Ingen data")
                 continue
 
-            close = float(data["Close"].iloc[-1])
-            previous = float(data["Close"].iloc[-2])
+            close = hist["Close"].iloc[-1]
+            previous = hist["Close"].iloc[-2]
 
             change = ((close - previous) / previous) * 100
 
@@ -39,6 +35,6 @@ def get_market_report():
             )
 
         except Exception as e:
-            report.append(f"⚠️ {name} {str(e)}")
+            report.append(f"⚠️ {name}: {e}")
 
     return "\n".join(report)
