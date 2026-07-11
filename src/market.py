@@ -38,7 +38,7 @@ def get_market_report():
                 f"{emoji} **{name}** {change:+.2f}%"
             )
 
-        except Exception:
-            report.append(f"⚠️ {name} Fel")
+        except Exception as e:
+    report.append(f"⚠️ {name} {str(e)}")
 
     return "\n".join(report)
