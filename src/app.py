@@ -8,7 +8,11 @@ WEBHOOK = os.environ["DISCORD_WEBHOOK"]
 
 embed = {
     "title": "📈 Market Close",
-    "description": get_market_report(),
+    "description":
+    "## 📊 Index\n"
+    + get_market_report()
+    + "\n\n## 🪙 Crypto\n"
+    + get_crypto_report(),
     "color": 3447003,
     "footer": {
         "text": "MarketBot • Powered by GitHub Actions"
