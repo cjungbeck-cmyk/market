@@ -1,0 +1,22 @@
+name: Market Close Bot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "35 15 * * 1-5"
+
+jobs:
+  send-market-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Send test message to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST \
+          -d '{"content":"✅ Market Bot is alive! 🚀 GitHub Actions fungerar."}' \
+          $DISCORD_WEBHOOK
