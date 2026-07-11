@@ -16,7 +16,9 @@ embed = {
     + "\n\n## 🪙 Crypto\n"
     + get_crypto_report()
     + "\n\n## 💵 Valutor\n"
-    + get_forex_report(),
++ get_forex_report()
++ "\n\n## 🛢 Råvaror\n"
++ get_commodities_report(),
     "color": 3447003,
     "footer": {
         "text": "MarketBot • Powered by GitHub Actions"
