@@ -9,31 +9,60 @@ from ai import generate_summary
 
 WEBHOOK = os.environ["DISCORD_WEBHOOK"]
 
-# Bygg marknadsrapporten
-report = (
-    "## 📊 Index\n"
-    + get_market_report()
-    + "\n\n## 🪙 Crypto\n"
-    + get_crypto_report()
-    + "\n\n## 💵 Valutor\n"
-    + get_forex_report()
-    + "\n\n## 🛢 Råvaror\n"
-    + get_commodities_report()
-)
+# Hämta data
+market_report = get_market_report()
+crypto_report = get_crypto_report()
+forex_report = get_forex_report()
+commodities_report = get_commodities_report()
 
-# Skapa AI-sammanfattning
-summary = generate_summary(report)
+# AI-sammanfattning
+full_report = f"""
+Index
+{market_report}
 
-# Discord Embed
+Crypto
+{crypto_report}
+
+Forex
+{forex_report}
+
+Commodities
+{commodities_report}
+"""
+
+summary = generate_summary(full_report)
+
+# Discord Embed med Fields
 embed = {
     "title": "📈 Market Close",
-    "description": (
-        report
-        + "\n\n────────────────────\n\n"
-        + "🤖 **AI Market Summary**\n"
-        + summary
-    ),
     "color": 3447003,
+    "fields": [
+        {
+            "name": "📊 Index",
+            "value": market_report,
+            "inline": False
+        },
+        {
+            "name": "🪙 Crypto",
+            "value": crypto_report,
+            "inline": False
+        },
+        {
+            "name": "💵 Valutor",
+            "value": forex_report,
+            "inline": False
+        },
+        {
+            "name": "🛢 Råvaror",
+            "value": commodities_report,
+            "inline": False
+        },
+        {
+            "name": "🤖 AI Market Summary",
+            "value": summary,
+            "inline": False
+        }
+    ],
     "footer": {
         "text": "MarketBot • Powered by GitHub Actions"
     }
