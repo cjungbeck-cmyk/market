@@ -39,6 +39,6 @@ def get_market_report():
             )
 
         except Exception as e:
-    report.append(f"⚠️ {name} {str(e)}")
+            report.append(f"⚠️ {name} {str(e)}")
 
     return "\n".join(report)
