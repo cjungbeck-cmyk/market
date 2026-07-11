@@ -5,13 +5,15 @@ from market import get_market_report
 
 WEBHOOK = os.environ["DISCORD_WEBHOOK"]
 
-message = f"""
-# 📈 Market Close
+message = f"""📈 Market Close
 
 {get_market_report()}
 """
 
-requests.post(
+response = requests.post(
     WEBHOOK,
     json={"content": message}
 )
+
+print("Discord status:", response.status_code)
+print("Discord response:", response.text)
