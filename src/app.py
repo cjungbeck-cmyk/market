@@ -2,6 +2,7 @@ import os
 import requests
 
 from market import get_market_report
+from crypto import get_crypto_report
 
 WEBHOOK = os.environ["DISCORD_WEBHOOK"]
 
