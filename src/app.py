@@ -5,6 +5,7 @@ from market import get_market_report
 from crypto import get_crypto_report
 from forex import get_forex_report
 from commodities import get_commodities_report
+from ai import generate_summary
 
 WEBHOOK = os.environ["DISCORD_WEBHOOK"]
 
