@@ -4,7 +4,7 @@ markets = {
     "S&P 500": "^GSPC",
     "Nasdaq": "^IXIC",
     "Dow Jones": "^DJI",
-    "OMXS30": "^OMX",
+    "OMXS30": "^OMXS30",
     "DAX": "^GDAXI",
 }
 
