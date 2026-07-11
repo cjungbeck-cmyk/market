@@ -18,7 +18,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run Market Bot
-        run: python app.py
+        run: python src/app.py
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
