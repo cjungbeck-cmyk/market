@@ -16,25 +16,24 @@ def get_market_report():
 
         try:
 
-            ticker_obj = yf.Ticker(ticker)
-            hist = ticker_obj.history(period="5d")
+            hist = yf.Ticker(ticker).history(period="5d")
 
             if hist.empty or len(hist) < 2:
-                report.append(f"⚪ {name} Ingen data")
+                report.append(f"⚪ **{name}** Ingen data")
                 continue
 
-            close = hist["Close"].iloc[-1]
-            previous = hist["Close"].iloc[-2]
+            close = float(hist["Close"].iloc[-1])
+            previous = float(hist["Close"].iloc[-2])
 
             change = ((close - previous) / previous) * 100
 
             emoji = "🟢" if change >= 0 else "🔴"
 
             report.append(
-                f"{emoji} **{name}** {change:+.2f}%"
+                f"{emoji} **{name}** {close:,.2f} ({change:+.2f}%)"
             )
 
         except Exception as e:
-            report.append(f"⚠️ {name}: {e}")
+            report.append(f"⚠️ **{name}** {e}")
 
     return "\n".join(report)
